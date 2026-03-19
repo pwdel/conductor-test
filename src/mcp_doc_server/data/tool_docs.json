@@ -1,0 +1,108 @@
+{
+  "tools": [
+    {
+      "name": "ripgrep",
+      "category": "search",
+      "summary": "Fast recursive text search for code and logs.",
+      "use_cases": [
+        "Find symbols across a monorepo",
+        "Search TODOs, API usage, and error strings",
+        "Drive code review automation and refactor prep"
+      ],
+      "install": "brew install ripgrep",
+      "docs_url": "https://github.com/BurntSushi/ripgrep",
+      "why_not_rebuild": "Mature regex engine, high performance, excellent CLI ergonomics."
+    },
+    {
+      "name": "fd",
+      "category": "filesystem",
+      "summary": "Friendly and fast file discovery alternative to find.",
+      "use_cases": [
+        "Locate config files quickly",
+        "Filter files by extension and path patterns",
+        "Compose with xargs and ripgrep in scripts"
+      ],
+      "install": "brew install fd",
+      "docs_url": "https://github.com/sharkdp/fd",
+      "why_not_rebuild": "Consistent UX, speed, and ignore file support already solved."
+    },
+    {
+      "name": "jq",
+      "category": "json",
+      "summary": "Command-line JSON parser and transformer.",
+      "use_cases": [
+        "Slice API responses",
+        "Validate generated JSON in CI",
+        "Transform structured logs for debugging"
+      ],
+      "install": "brew install jq",
+      "docs_url": "https://jqlang.github.io/jq/",
+      "why_not_rebuild": "Battle-tested expression language and stable behavior."
+    },
+    {
+      "name": "yq",
+      "category": "yaml",
+      "summary": "YAML/JSON/TOML processor for automation workflows.",
+      "use_cases": [
+        "Patch Kubernetes manifests",
+        "Inspect Docker Compose files",
+        "Automate config updates in CI scripts"
+      ],
+      "install": "brew install yq",
+      "docs_url": "https://github.com/mikefarah/yq",
+      "why_not_rebuild": "Already handles YAML edge cases and cross-format conversion."
+    },
+    {
+      "name": "just",
+      "category": "automation",
+      "summary": "Task runner with simple syntax for repeatable dev commands.",
+      "use_cases": [
+        "Standardize local build/run/test commands",
+        "Replace brittle shell aliases with named recipes",
+        "Publish one command catalog per repo"
+      ],
+      "install": "brew install just",
+      "docs_url": "https://github.com/casey/just",
+      "why_not_rebuild": "Great readability and predictable command orchestration."
+    },
+    {
+      "name": "uv",
+      "category": "python",
+      "summary": "High-performance Python package and environment manager.",
+      "use_cases": [
+        "Resolve Python dependencies quickly",
+        "Pin reproducible lockfiles for Docker builds",
+        "Run Python tools in isolated environments"
+      ],
+      "install": "brew install uv",
+      "docs_url": "https://docs.astral.sh/uv/",
+      "why_not_rebuild": "Fast resolver and integrated environment management."
+    },
+    {
+      "name": "watchexec",
+      "category": "automation",
+      "summary": "Run commands on file changes for tight feedback loops.",
+      "use_cases": [
+        "Auto-run tests when source changes",
+        "Live reload local development scripts",
+        "Watch and rebuild generated docs"
+      ],
+      "install": "brew install watchexec",
+      "docs_url": "https://github.com/watchexec/watchexec",
+      "why_not_rebuild": "File watching portability and debouncing are already solved."
+    },
+    {
+      "name": "mise",
+      "category": "toolchain",
+      "summary": "Unified runtime manager for Node, Python, Go, and more.",
+      "use_cases": [
+        "Lock versions per project",
+        "Bootstrap dev machines quickly",
+        "Share toolchain versions across teams"
+      ],
+      "install": "brew install mise",
+      "docs_url": "https://mise.jdx.dev/",
+      "why_not_rebuild": "Cross-language version management is complex and solved well here."
+    }
+  ]
+}
