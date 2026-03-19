@@ -10,11 +10,8 @@ services:
         target: /workspace
     working_dir: /workspace
     command:
-      - fastmcp
-      - run
-      - src/mcp_doc_server/server.py
-      - --transport
-      - streamable-http
+      - uvicorn
+      - mcp_doc_server.http_app:app
       - --host
       - 0.0.0.0
       - --port

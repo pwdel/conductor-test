@@ -11,4 +11,4 @@ RUN uv pip install --python /opt/venv/bin/python -e .
 
 EXPOSE 8005
 
-CMD ["fastmcp", "run", "src/mcp_doc_server/server.py", "--transport", "streamable-http", "--host", "0.0.0.0", "--port", "8005"]
+CMD ["uvicorn", "mcp_doc_server.http_app:app", "--host", "0.0.0.0", "--port", "8005"]
