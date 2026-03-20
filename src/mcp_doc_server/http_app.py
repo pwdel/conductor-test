@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from fastapi import FastAPI, HTTPException, Query
 
-from mcp_doc_server.server import (
-    _load_catalog,
-    _normalize_tool_name,
-    get_agent_strategy_notes,
-    mcp,
-)
+from mcp_doc_server.server import _load_catalog, _normalize_tool_name, get_agent_strategy_notes, mcp
+
+# FastMCP's ASGI app must provide lifespan to parent app.
+mcp_app = mcp.http_app(path="/", transport="streamable-http")
 
 app = FastAPI(
     title="MCP Tool Docs Server",
@@ -16,6 +14,7 @@ app = FastAPI(
         "HTTP wrapper around FastMCP tool documentation. "
         "Use `/mcp` for MCP transport and `/docs` for Swagger UI."
     ),
+    lifespan=mcp_app.lifespan,
 )
 
 
@@ -60,4 +59,4 @@ def strategy() -> dict[str, str]:
 
 
 # Mount MCP transport at /mcp and keep HTTP docs at /docs.
-app.mount("/mcp", mcp.http_app(path="/", transport="streamable-http"))
+app.mount("/mcp", mcp_app)
