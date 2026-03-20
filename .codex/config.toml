@@ -1,0 +1,2 @@
+[mcp_servers.localhost-8005]
+url = "http://localhost:8005"
