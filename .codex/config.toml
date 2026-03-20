@@ -1,2 +1,8 @@
 [mcp_servers.localhost-8005]
 url = "http://localhost:8005"
+
+[projects."/Users/patrick/Projects/conductor-test"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
