@@ -35,7 +35,7 @@ case "${ACTION}" in
     fi
     docker compose -f "${COMPOSE_FILE}" up -d
     echo "MCP server is running."
-    echo "MCP endpoint: http://localhost:${HOST_PORT}/mcp"
+    echo "MCP endpoint: http://localhost:${HOST_PORT}/mcp/"
     echo "Swagger UI:  http://localhost:${HOST_PORT}/docs"
     ;;
   down)
