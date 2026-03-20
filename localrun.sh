@@ -34,7 +34,9 @@ case "${ACTION}" in
       "${ROOT_DIR}/localbuild.sh"
     fi
     docker compose -f "${COMPOSE_FILE}" up -d
-    echo "MCP server is running at http://localhost:${HOST_PORT}/mcp"
+    echo "MCP server is running."
+    echo "MCP endpoint: http://localhost:${HOST_PORT}/mcp"
+    echo "Swagger UI:  http://localhost:${HOST_PORT}/docs"
     ;;
   down)
     docker compose -f "${COMPOSE_FILE}" down --remove-orphans

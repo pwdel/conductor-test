@@ -26,7 +26,11 @@ Stop it with:
 ./localrun.sh down
 ```
 
-By default, the MCP server listens at `http://localhost:8005`, with MCP transport endpoint at `http://localhost:8005/mcp`.
+By default, the server listens at `http://localhost:8005` with:
+
+- MCP transport endpoint: `http://localhost:8005/mcp`
+- Swagger UI: `http://localhost:8005/docs`
+- JSON catalog API: `http://localhost:8005/api/tools`
 
 ## Scripts
 
@@ -60,3 +64,11 @@ The server includes tools to:
 - return the strategy notes for "tool-first" coding-agent behavior
 
 This is intended as a practical foundation for future hooks in Claude Code or OpenCode so the model checks this MCP source first.
+
+## HTTP endpoints
+
+- `GET /healthz`: liveness check
+- `GET /api/tools?category=...`: list documented tools
+- `GET /api/tools/{tool_name}`: fetch full entry for one tool
+- `GET /api/strategy`: read the long-term MCP strategy document
+- `POST /mcp` and MCP streamable-http routes: MCP transport surface
