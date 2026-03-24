@@ -1,81 +1,77 @@
-# MCP Tool Docs Server
+# Conductor Test: MCP Tool Docs Server
 
-Dockerized FastMCP server that exposes documentation about off-the-shelf tools so coding agents can check practical, production-ready options before inventing custom implementations.
+This repository is a test project used to validate a Conductor workflow end-to-end:
 
-## What this includes
+- spin up an isolated workspace
+- iterate with an AI coding agent
+- run and fix local infrastructure (`docker`, `compose`, startup scripts)
+- expose an MCP server that can be consumed by coding assistants
 
-- `base.Dockerfile`: small Debian/Python base image with `uv` and a dedicated virtualenv.
-- `app.Dockerfile`: application image that installs dependencies from `pyproject.toml`.
-- `docker-compose.yml`: runtime service with port `8005` and a bind mount of your local code.
-- `localbuild.sh`: builds base + app images with deterministic unique names.
-- `localrun.sh up|down`: starts and stops the local MCP service.
-- `src/mcp_doc_server/server.py`: FastMCP server with documentation tools.
-- `src/mcp_doc_server/data/tool_docs.json`: off-the-shelf tool catalog.
-- `docs/mcp_strategy.md`: long-term strategy for wiring coding-agent hooks.
+## What We Built
 
-## Quick start
+We built a Dockerized MCP documentation server for coding agents. It exposes:
+
+- an MCP endpoint (`/mcp/`) for tool calls
+- a small HTTP API for querying tool documentation
+- a strategy document describing tool-first agent behavior
+
+Core files:
+
+- `base.Dockerfile`: Python + `uv` base image
+- `app.Dockerfile`: app image for the MCP server
+- `docker-compose.yml`: local runtime configuration
+- `localbuild.sh`: deterministic local image build helper
+- `localrun.sh`: local up/down runner
+- `src/mcp_doc_server/http_app.py`: HTTP app entrypoint
+- `src/mcp_doc_server/server.py`: MCP server implementation
+- `src/mcp_doc_server/data/tool_docs.json`: tool catalog data
+- `docs/mcp_strategy.md`: strategy notes for coding-agent workflows
+
+## Quick Start
 
 ```bash
 ./localbuild.sh
 ./localrun.sh up
 ```
 
-Stop it with:
+Stop:
 
 ```bash
 ./localrun.sh down
 ```
 
-<<<<<<< HEAD
-By default, the MCP server listens at `http://localhost:8005`, with MCP transport endpoint at `http://localhost:8005/mcp`.
-=======
-By default, the server listens at `http://localhost:8005` with:
+Default local URLs:
 
-- MCP transport endpoint: `http://localhost:8005/mcp/` (note trailing slash)
+- MCP endpoint: `http://localhost:8005/mcp/`
 - Swagger UI: `http://localhost:8005/docs`
-- JSON catalog API: `http://localhost:8005/api/tools`
->>>>>>> main
 
-## Scripts
+## Why This Repo Exists
 
-### Build
+This is explicitly a Conductor test repository. The goal is not only to build the MCP service, but also to validate how Conductor handles:
 
-```bash
-./localbuild.sh
-./localbuild.sh --no-cache
-```
+- isolated agent workspaces
+- safe parallel task execution
+- branch-per-task development
+- merge and handoff workflow back to GitHub PRs
 
-### Run
+## How Conductor Leverages Git Worktrees
 
-```bash
-./localrun.sh up
-./localrun.sh down
-```
+Conductor uses Git worktrees as the core mechanism for multi-agent local development:
 
-Optional port override:
+- Isolation: each workspace/agent session gets its own Git worktree and branch in a separate local directory, without doing a full extra clone.
+- Parallelism: multiple agents can work at the same time on different tasks without file-level conflicts in one working directory.
+- Shared history: worktrees share one underlying `.git` repository, so commit history, refs, and remotes stay consistent.
+- Streamlined workflow: agents and developers can switch contexts quickly without heavy `stash` workflows.
+- Environment management: workspace-specific setup scripts can configure env vars and dependencies per worktree.
 
-```bash
-HOST_PORT=8010 ./localrun.sh up
-```
+In practice, this lets you run concurrent coding sessions while keeping changes isolated and reviewable.
 
-## Toolset exposed by MCP
+## Notes About Conductor
 
-The server includes tools to:
+As described in the public Conductor announcement, Conductor is a Mac app for running multiple coding-agent sessions in parallel, built with Tauri (Rust backend + native renderer), and uses Git worktrees under the hood for one-click isolated workspaces.
 
-- list documented off-the-shelf tools
-- fetch full documentation for a tool
-- recommend tools for a specific problem statement
-- return the strategy notes for "tool-first" coding-agent behavior
+## Open Source Reference
 
-This is intended as a practical foundation for future hooks in Claude Code or OpenCode so the model checks this MCP source first.
-<<<<<<< HEAD
-=======
+An open-source version of Conductor is available here:
 
-## HTTP endpoints
-
-- `GET /healthz`: liveness check
-- `GET /api/tools?category=...`: list documented tools
-- `GET /api/tools/{tool_name}`: fetch full entry for one tool
-- `GET /api/strategy`: read the long-term MCP strategy document
-- `POST /mcp/` and MCP streamable-http routes: MCP transport surface
->>>>>>> main
+- https://github.com/pwdel/crystal/tree/v0.3.4
